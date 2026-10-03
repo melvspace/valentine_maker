@@ -29,14 +29,14 @@ class AnimatedSwitcherLayout extends StatelessWidget {
   final Widget? currentChild;
 
   const AnimatedSwitcherLayout({
-    Key? key,
+    super.key,
     this.fit = StackFit.loose,
     this.alignment = AlignmentDirectional.topStart,
     this.previousChildren = const [],
     this.currentChild,
     this.ignorePreviousChildrenSize = false,
     this.clipBehavior = Clip.hardEdge,
-  }) : super(key: key);
+  });
 
   static _LayoutBuilder builder({
     Key? key,
@@ -72,7 +72,7 @@ class AnimatedSwitcherLayout extends StatelessWidget {
                 )
               : e,
         ),
-        if (currentChild != null) currentChild!,
+        ?currentChild,
       ],
     );
   }

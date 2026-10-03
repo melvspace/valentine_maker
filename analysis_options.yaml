@@ -3,6 +3,14 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     always_declare_return_types: warning
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 linter:
   rules:

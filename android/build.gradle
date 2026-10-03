@@ -1,15 +1,3 @@
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -23,6 +11,18 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
+}
+
+// Sentry 8 is required until its JNI constraint supports path_provider_android.
+// Its Kotlin 1.6 language setting is unsupported by the current Kotlin compiler.
+subprojects {
+    if (project.name == 'sentry_flutter') {
+        project.afterEvaluate {
+            tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                kotlinOptions.languageVersion = '1.8'
+            }
+        }
+    }
 }
 
 tasks.register("clean", Delete) {

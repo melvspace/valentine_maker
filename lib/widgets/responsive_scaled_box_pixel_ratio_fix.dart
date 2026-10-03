@@ -29,7 +29,7 @@ class _ResponsiveScaledBoxPixelRatioFixState extends State<ResponsiveScaledBoxPi
 
   @override
   Widget build(BuildContext context) {
-    final width = ResponsiveValue<double>(
+    final width = ResponsiveValue<double?>(
       context,
       conditionalValues: [
         Condition.smallerThan(breakpoint: 375, value: 375),

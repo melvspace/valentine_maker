@@ -54,7 +54,12 @@ final kRouter = GoRouter(
 class FadePage<T> extends CustomTransitionPage<T> {
   const FadePage({required super.child, required super.key}) : super(transitionsBuilder: transition);
 
-  static Widget transition(context, animation, secondaryAnimation, child) {
+  static Widget transition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return FadeTransition(
       opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
       child: child,
@@ -65,7 +70,12 @@ class FadePage<T> extends CustomTransitionPage<T> {
 class FlashPage<T> extends CustomTransitionPage<T> {
   const FlashPage({required super.child, required super.key}) : super(transitionsBuilder: transition);
 
-  static Widget transition(context, Animation<double> animation, secondaryAnimation, child) {
+  static Widget transition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     if (animation.status == AnimationStatus.reverse) {
       return FadePage.transition(context, animation, secondaryAnimation, child);
     }
@@ -74,8 +84,8 @@ class FlashPage<T> extends CustomTransitionPage<T> {
       animation: animation,
       builder: (context, child) => DecoratedBox(
         decoration: BoxDecoration(
-          color: context.white.withOpacity(
-            TweenSequence<double>([
+          color: context.white.withValues(
+            alpha: TweenSequence<double>([
               TweenSequenceItem(
                 tween: Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.easeIn)),
                 weight: .5,
@@ -106,7 +116,7 @@ class Responsive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaledBoxPixelRatioFix(
-      width: ResponsiveValue<double>(
+      width: ResponsiveValue<double?>(
         context,
         conditionalValues: [
           Condition.smallerThan(breakpoint: 375, value: 375),

@@ -140,6 +140,7 @@ class _ValentineMakerPageState extends State<ValentineMakerPage> with TickerProv
   @override
   void initState() {
     Future.microtask(() {
+      if (!mounted) return;
       tool = tool;
       selectedPaintColor = selectedPaintColor;
 

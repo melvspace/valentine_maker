@@ -15,20 +15,19 @@ class DebugBorder extends StatefulWidget {
   final bool drawDimensionsInside;
 
   const DebugBorder({
-    Key? key,
+    super.key,
     required this.child,
     this.showDimensions = false,
     this.color = Colors.red,
     this.drawDimensionsInside = false,
-  }) : super(key: key);
+  });
 
   const DebugBorder.dimensions({
-    Key? key,
+    super.key,
     required this.child,
     this.color = Colors.red,
     this.drawDimensionsInside = false,
-  })  : showDimensions = true,
-        super(key: key);
+  }) : showDimensions = true;
 
   @override
   State<DebugBorder> createState() => _DebugBorderState();

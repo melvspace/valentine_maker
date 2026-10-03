@@ -87,25 +87,29 @@ class _SharePageState extends State<SharePage> with SingleTickerProviderStateMix
           mimeType: 'image/png',
         ).saveTo('valentine.png');
 
-        await Share.shareXFiles(
-          [XFile('valentine.png')],
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile.fromData(image.buffer.asUint8List(), mimeType: 'image/png')],
+          fileNameOverrides: ['valentine.png'],
           sharePositionOrigin: _repaintBoundaryKey.currentContext?.findRenderObject()?.paintBounds,
-        );
+        ));
       } else if (Platform.isLinux || Platform.isWindows) {
         final downloads = await getDownloadsDirectory();
 
-        var path = await FilePicker.platform.saveFile(
+        final savedFile = await FilePicker.saveFile(
           dialogTitle: 'Pick directory to save a Valentine',
           initialDirectory: downloads?.path,
-          allowedExtensions: ['.png'],
+          allowedExtensions: ['png'],
           fileName: 'valentine.png',
-          lockParentWindow: true,
+          bytes: image.buffer.asUint8List(),
+          mimeType: 'image/png',
           type: FileType.custom,
         );
 
-        if (path == null) {
+        if (savedFile == null) {
           if (downloads == null) throw StateError("No downloads folder found");
-          path = '${downloads.path}/valentine.png';
+          final path = '${downloads.path}/valentine.png';
+          final file = await File(path).create(recursive: true);
+          await file.writeAsBytes(image.buffer.asUint8List());
 
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -120,14 +124,12 @@ class _SharePageState extends State<SharePage> with SingleTickerProviderStateMix
             );
           }
         }
-
-        final file = await File(path).create(recursive: true);
-        await file.writeAsBytes(image.buffer.asUint8List());
       } else {
-        await Share.shareXFiles(
-          [XFile.fromData(image.buffer.asUint8List(), name: 'valentine', mimeType: 'image/png')],
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile.fromData(image.buffer.asUint8List(), name: 'valentine', mimeType: 'image/png')],
+          fileNameOverrides: ['valentine.png'],
           sharePositionOrigin: _repaintBoundaryKey.currentContext?.findRenderObject()?.paintBounds,
-        );
+        ));
       }
     } finally {
       busy = false;

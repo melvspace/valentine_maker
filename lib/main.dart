@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -38,10 +37,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   Future<void> precacheAssets(BuildContext context) async {
-    final manifestJson = await rootBundle.loadString('AssetManifest.json');
-    final Map<String, dynamic> manifest = jsonDecode(manifestJson);
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
 
-    await Future.wait(manifest.keys
+    await Future.wait(manifest.listAssets()
         .where((element) => element.endsWith('.png') || element.endsWith('.webp'))
         .map((e) => precacheImage(AssetImage(e), context)));
   }

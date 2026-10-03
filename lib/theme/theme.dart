@@ -1,34 +1,66 @@
-// ignore_for_file: unused_field, unused_element
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'theme.tailor.dart';
 
-@Tailor(themes: ['light'])
-class _$AppColors {
-  static const List<Color> background = [Color(0xFFFA9FED)];
-  static const List<Color> text = [Colors.white];
+@TailorMixin(themeGetter: ThemeGetter.onBuildContextProps)
+class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
+  const AppColors({
+    this.background = const Color(0xFFFA9FED),
+    this.text = Colors.white,
+    this.blue = const Color(0xFF347AFE),
+    this.green = const Color(0xFF00DEB7),
+    this.pink = const Color(0xFFFE82EA),
+    this.red = const Color(0xFFFF414D),
+    this.violet = const Color(0xFFCA8FFF),
+    this.cyan = const Color(0xFF57F5FF),
+    this.yellow = const Color(0xFFFFE264),
+    this.white = Colors.white,
+    this.black = Colors.black,
+  });
 
-  static const List<Color> blue = [Color(0xFF347AFE)];
-  static const List<Color> green = [Color(0xFF00DEB7)];
-  static const List<Color> pink = [Color(0xFFFE82EA)];
-  static const List<Color> red = [Color(0xFFFF414D)];
-  static const List<Color> violet = [Color(0xFFCA8FFF)];
-  static const cyan = [Color(0xFF57F5FF)];
-  static const List<Color> yellow = [Color(0xFFFFE264)];
+  static const light = AppColors();
 
-  static const List<Color> white = [Colors.white];
-  static const List<Color> black = [Colors.black];
+  @override
+  final Color background;
+  @override
+  final Color text;
+  @override
+  final Color blue;
+  @override
+  final Color green;
+  @override
+  final Color pink;
+  @override
+  final Color red;
+  @override
+  final Color violet;
+  @override
+  final Color cyan;
+  @override
+  final Color yellow;
+  @override
+  final Color white;
+  @override
+  final Color black;
 }
 
-@Tailor(themes: ['core'])
-class _$AppStyles {
+@TailorMixin(themeGetter: ThemeGetter.onBuildContextProps)
+class AppStyles extends ThemeExtension<AppStyles> with _$AppStylesTailorMixin {
+  const AppStyles({required this.h1, required this.button});
+
   static const _kFontFamily = GoogleFonts.fredoka;
 
-  static final List<TextStyle> h1 = [_kFontFamily(fontSize: 50, height: 62 / 50, fontWeight: FontWeight.w600)];
-  static final List<TextStyle> button = [_kFontFamily(fontSize: 20, height: 24 / 20, fontWeight: FontWeight.w600)];
+  static final core = AppStyles(
+    h1: _kFontFamily(fontSize: 50, height: 62 / 50, fontWeight: FontWeight.w600),
+    button: _kFontFamily(fontSize: 20, height: 24 / 20, fontWeight: FontWeight.w600),
+  );
+
+  @override
+  final TextStyle h1;
+  @override
+  final TextStyle button;
 }
 
 final kLightTheme = ThemeData(

@@ -59,12 +59,6 @@
   <meta name="twitter:description" content="Valentine’s Day is here! The perfect Valentine’s Day card shows your special someone what they mean to you, and you can’t always find it in a store">
   <meta name="twitter:image" content="/icons/Icon-512.png">
 
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
 
   <link rel="stylesheet" href="style/index.css">
 </head>
@@ -73,20 +67,6 @@
     <div class="dot"></div>
     <div class="dot2"></div>
   </div>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine({renderer: "canvaskit"}).then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

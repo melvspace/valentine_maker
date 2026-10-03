@@ -14,10 +14,10 @@ class BlisterWidget extends StatefulWidget {
   final Widget child;
 
   const BlisterWidget({
-    Key? key,
+    super.key,
     required this.child,
     this.active = false,
-  }) : super(key: key);
+  });
 
   @override
   State<BlisterWidget> createState() => _BlisterWidgetState();
