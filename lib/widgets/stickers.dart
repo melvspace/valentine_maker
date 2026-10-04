@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +23,10 @@ class _StickersState extends State<Stickers> {
   }
 
   Future<void> _init() async {
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final stickers = manifest.listAssets().where((element) => element.startsWith('assets/images/maker/stickers/')).toList();
 
-    final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
-
-    final stickers = manifestMap.keys.where((element) => element.startsWith('assets/images/maker/stickers/')).toList();
-
+    if (!mounted) return;
     setState(() => this.stickers = stickers);
   }
 
